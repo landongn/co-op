@@ -1,3 +1,5 @@
+gin-bin
+
 # Numerous always-ignore extensions
 *.diff
 *.err
@@ -39,13 +41,13 @@ pip-log.txt
 .tox
 
 # Compiled static files
-deploy
+static/deploy
 
 # npm
-node_modules
+static/node_modules
 
 # Bower
-static/lib
+static/static/lib
 
 # Sass
 .sass-cache
