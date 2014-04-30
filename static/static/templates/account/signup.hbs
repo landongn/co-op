@@ -1,16 +1,17 @@
 <h1>Sign up for an account</h1>
 
-<form action="/account/signup">
+<form>
 	<label for="username">
-		<input type="text" name="username" placeholder="username" />
+		{{input type="text" name="username" placeholder="username" value=username}}
 	</label>
 
 	<label for="email">
-		<input type="text" name="email" placeholder="email" />
+		{{input type="text" name="email" placeholder="email" value=email}}
 	</label>
 
 	<label for="password">
-		<input type="password" name="password" placeholder="password" />
+		{{input type="password" name="password" placeholder="password" value=password}}
 	</label>
-
+	
+	<button {{action 'attemptRegistration'}}>Sign up</button>
 </form>

@@ -10,9 +10,9 @@ import (
 
 type Profile struct {
 	Id       hood.Id
-	Username string `sql:"pk" validate:"presence"`
-	Email    string `sql:validate:"presence"`
-	Password []byte `sql:size(255)`
+	Username string `sql:"pk" validate:"presence" notnull`
+	Email    string `sql:validate:"presence" notnull`
+	Password string `sql:size(255) notnull`
 	// These fields are auto updated on save
 	Created hood.Created
 	Updated hood.Updated
@@ -31,7 +31,7 @@ func CreateProfile(r render.Render, rw http.ResponseWriter, req *http.Request, d
 
 	user := Profile{}
 
-	user.Password = hashedPassword
+	user.Password = string(hashedPassword)
 	user.Username = username
 	user.Email = email
 
@@ -44,5 +44,7 @@ func CreateProfile(r render.Render, rw http.ResponseWriter, req *http.Request, d
 	panicIf(err)
 
 	fmt.Println("Inserted a new user with id of: ", id)
-
+	r.JSON(200, map[string]interface{}{
+		"code": 200,
+		"msg":  "success"})
 }
