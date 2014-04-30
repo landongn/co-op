@@ -1,15 +1,29 @@
 package main
 
 import (
+	"api/users"
+	"github.com/eaigner/hood"
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/render"
 )
 
+func PanicIf(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
+func SetupDB() *hood.Hood {
+	hd, err := hood.Open("postgres", "user=coop dbname=coop_dev sslmode=disable")
+	PanicIf(err)
+
+	return hd
+}
 func main() {
 	m := martini.Classic()
 
 	m.Use(martini.Static("static/deploy"))
-
+	m.Map(SetupDB())
 	m.Use(render.Renderer(render.Options{
 		// Specify what path to load the templates from.
 		Directory: "templates",
@@ -30,6 +44,8 @@ func main() {
 	m.Get("/", func(r render.Render) {
 		r.HTML(200, "base", nil)
 	})
+
+	m.Post("/account/signup", users.CreateProfile)
 
 	m.Run()
 }
