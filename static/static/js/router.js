@@ -1,3 +1,5 @@
 App.Router.map(function () {
-	// Add routes here.
+	this.resource("account", function () {
+		this.route('signup');
+	});
 });

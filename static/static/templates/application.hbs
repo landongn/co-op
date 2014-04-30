@@ -1,13 +1,10 @@
-<div id="container">
-	<header>
-		<h1>
-			{{#link-to index}}App{{/link-to}}
-		</h1>
-		<nav role="navigation">
-			{{#link-to index}}Home{{/link-to}}
-		</nav>
-	</header>
-	<div id="main" role="main">
+<section class="main-container">
+	<h1>Coop - Life's more fun with other people.</h1>
+	<nav>
+		{{#link-to 'account.signup'}}Sign up{{/link-to}}
+	</nav>
+
+	<section class="main-outlet">
 		{{outlet}}
-	</div>
-</div>
+	</section>
+</section>
