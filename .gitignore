@@ -52,3 +52,5 @@ static/static/lib
 # Sass
 .sass-cache
 .temp
+
+node_modules
