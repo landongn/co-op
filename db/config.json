@@ -1,0 +1,14 @@
+{
+  "development": {
+    "driver": "postgres",
+    "source": "host=localhost user=coop_dev dbname=coop_dev password=coop_dev sslmode=disable"
+  },
+  "production": {
+    "driver": "postgres",
+    "source": "host=localhost user=coop_production dbname=coop_production password=coop_production sslmode=disable"
+  },
+  "test": {
+    "driver": "",
+    "source": ""
+  }
+}
