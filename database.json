@@ -1,0 +1,3 @@
+{
+    "dev" : "postgres://coop_dev:coop_dev@localhost/coop_dev"
+}
