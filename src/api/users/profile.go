@@ -31,10 +31,15 @@ func CreateProfile(r render.Render, rw http.ResponseWriter, req *http.Request, d
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	panicIf(err)
 
+	existingUser := Profile{Username: username, Email: email}
+	db.Where("username = ?", username).Or("email = ?", email).Find(&existingUser)
+
 	user := Profile{}
+
 	user.Password = string(hashedPassword)
 	user.Username = username
 	user.Email = email
+
 	user.VerifiedEmail = false
 	user.Created = time.Now()
 	user.Updated = time.Now()

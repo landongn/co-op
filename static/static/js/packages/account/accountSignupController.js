@@ -15,6 +15,12 @@ App.AccountSignupController = Ember.Controller.extend({
 		}
 	}.property('username', 'password', 'email'),
 
+
+
+	invalidate: function (data) {
+		
+	},
+	
 	actions: {
 		attemptRegistration: function () {
 			if (this.get('formIsValid')) {
@@ -23,8 +29,10 @@ App.AccountSignupController = Ember.Controller.extend({
 					password: this.get('password'),
 					email: this.get("email")
 				}, function (resp) {
-					if (resp.success && resp.code === 200) {
-						this.transitionTo('index');
+					if (resp.code === 200) {
+						this.transitionTo('login');
+					} else {
+						this.invalidate(resp.failure);
 					}
 				}.bind(this));
 			}

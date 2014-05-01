@@ -1,6 +1,7 @@
 package main
 
 import (
+	"api/auth"
 	"api/users"
 	"fmt"
 	"github.com/go-martini/martini"
@@ -51,6 +52,6 @@ func main() {
 	})
 
 	m.Post("/account/signup", users.CreateProfile)
-
+	m.Post("/account/login", login.AttemptLoginForUser)
 	m.Run()
 }
