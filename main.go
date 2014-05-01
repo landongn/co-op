@@ -17,11 +17,6 @@ func PanicIf(err error) {
 func SetupDB() *hood.Hood {
 	hd, err := hood.Open("postgres", "host=localhost user=coop_dev dbname=coop_dev password=coop_dev sslmode=disable")
 	PanicIf(err)
-
-	tx := hd.Begin()
-	fmt.Println("Creating tables...")
-	tx.CreateTableIfNotExists(&users.Profile{})
-	tx.Commit()
 	return hd
 }
 func main() {

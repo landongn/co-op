@@ -30,14 +30,13 @@ func CreateProfile(r render.Render, rw http.ResponseWriter, req *http.Request, d
 	panicIf(err)
 
 	user := Profile{}
-
 	user.Password = string(hashedPassword)
 	user.Username = username
 	user.Email = email
 
 	tx := db.Begin()
 
-	id, err := tx.Save(user)
+	id, err := tx.Save(&user)
 	panicIf(err)
 
 	err = tx.Commit()
