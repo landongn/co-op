@@ -2,20 +2,22 @@ package users
 
 import (
 	"code.google.com/p/go.crypto/bcrypt"
-	"fmt"
-	"github.com/eaigner/hood"
+	"github.com/jinzhu/gorm"
+	_ "github.com/lib/pq"
 	"github.com/martini-contrib/render"
 	"net/http"
+	"time"
 )
 
 type Profile struct {
-	Id       hood.Id
-	Username string `sql:"pk" validate:"presence" notnull`
-	Email    string `sql:validate:"presence" notnull`
-	Password string `sql:size(255) notnull`
-	// These fields are auto updated on save
-	Created hood.Created
-	Updated hood.Updated
+	Id            int64  `primaryKey:"yes"`
+	Username      string `sql:"not null;unique"`
+	Email         string `sql:"not null;unique"`
+	Password      string `sql:"not null;unique"`
+	Created       time.Time
+	Updated       time.Time
+	Bio           string
+	VerifiedEmail bool
 }
 
 func panicIf(err error) {
@@ -24,7 +26,7 @@ func panicIf(err error) {
 	}
 }
 
-func CreateProfile(r render.Render, rw http.ResponseWriter, req *http.Request, db *hood.Hood) {
+func CreateProfile(r render.Render, rw http.ResponseWriter, req *http.Request, db *gorm.DB) {
 	username, email, password := req.FormValue("username"), req.FormValue("email"), req.FormValue("password")
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	panicIf(err)
@@ -33,16 +35,12 @@ func CreateProfile(r render.Render, rw http.ResponseWriter, req *http.Request, d
 	user.Password = string(hashedPassword)
 	user.Username = username
 	user.Email = email
+	user.VerifiedEmail = false
+	user.Created = time.Now()
+	user.Updated = time.Now()
 
-	tx := db.Begin()
+	db.Save(&user)
 
-	id, err := tx.Save(&user)
-	panicIf(err)
-
-	err = tx.Commit()
-	panicIf(err)
-
-	fmt.Println("Inserted a new user with id of: ", id)
 	r.JSON(200, map[string]interface{}{
 		"code": 200,
 		"msg":  "success"})

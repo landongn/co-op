@@ -3,8 +3,8 @@ package main
 import (
 	"api/users"
 	"fmt"
-	"github.com/eaigner/hood"
 	"github.com/go-martini/martini"
+	"github.com/jinzhu/gorm"
 	"github.com/martini-contrib/render"
 )
 
@@ -14,17 +14,21 @@ func PanicIf(err error) {
 	}
 }
 
-func SetupDB() *hood.Hood {
-	hd, err := hood.Open("postgres", "host=localhost user=coop_dev dbname=coop_dev password=coop_dev sslmode=disable")
+func SetupDB() *gorm.DB {
+	DB, err := gorm.Open("postgres", "host=localhost user=coop_dev dbname=coop_dev password=coop_dev sslmode=disable")
 	PanicIf(err)
-	return hd
+	DB.LogMode(true)
+	DB.AutoMigrate(users.Profile{})
+	return &DB
 }
+
 func main() {
 	m := martini.Classic()
 
 	m.Use(martini.Static("static/deploy"))
 	fmt.Println("Setting up DB")
 	m.Map(SetupDB())
+
 	m.Use(render.Renderer(render.Options{
 		// Specify what path to load the templates from.
 		Directory: "templates",
