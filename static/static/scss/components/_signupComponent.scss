@@ -8,7 +8,8 @@
 	form {
 		label {
 			span {
-				visibility:hidden;
+				opacity: 0;
+				transition: opacity 350ms ease-in, transform 350ms ease-in;
 				color: #fff;
 				padding: 5px;
 				text-align: left;
@@ -18,6 +19,11 @@
 				left: 100%;
 				display: block;
 				min-width: 300px;
+				&.show-tooltip {
+					opacity: 1;
+					transition: opacity 350ms ease-in, transform 350ms ease-in;
+					transform: translateY(-10px);
+				}
 			}
 
 			input {
