@@ -7,18 +7,21 @@
 
 
 	<label for="username">
-		<span>use a nickname, not your personal information.</span>
+		<span class="tooltip">use a nickname, not your personal information.</span>
 		{{input type="text" name="username" placeholder="username" value=username}}
+		<span {{bind-attr class=":validator invalidUsername"}}>{{failureUsername}}</span>
 	</label>
 
 	<label for="email">
-		<span>We need a way to contact you sometimes.</span>
+		<span class="tooltip">We need a way to contact you sometimes.</span>
 		{{input type="text" name="email" placeholder="email" value=email}}
+		<span {{bind-attr class=":validator invalidEmail"}}>{{failureEmail}}</span>
 	</label>
 
 	<label for="password">
-		<span>In the spirit of new adventures, try a password you've never used before.</span>
+		<span class="tooltip">In the spirit of new adventures, try a password you've never used before.</span>
 		{{input type="password" name="password" placeholder="password" value=password}}
+		<span {{bind-attr class=":validator invalidPassword"}}>{{failurePassword}}</span>
 	</label>
 	
 	<button class="signup-button" {{action 'attemptRegistration'}}>Sign up</button>
