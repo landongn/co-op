@@ -31,22 +31,25 @@ func CreateProfile(r render.Render, rw http.ResponseWriter, req *http.Request, d
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	panicIf(err)
 
-	existingUser := Profile{Username: username, Email: email}
-	db.Where("username = ?", username).Or("email = ?", email).Find(&existingUser)
+	if db.Where("username = ?", username).Or("email = ?", email).Find(&Profile{Username: username, Email: email}).RecordNotFound() {
+		user := Profile{}
 
-	user := Profile{}
+		user.Password = string(hashedPassword)
+		user.Username = username
+		user.Email = email
 
-	user.Password = string(hashedPassword)
-	user.Username = username
-	user.Email = email
+		user.VerifiedEmail = false
+		user.Created = time.Now()
+		user.Updated = time.Now()
 
-	user.VerifiedEmail = false
-	user.Created = time.Now()
-	user.Updated = time.Now()
+		db.Save(&user)
 
-	db.Save(&user)
-
-	r.JSON(200, map[string]interface{}{
-		"code": 200,
-		"msg":  "success"})
+		r.JSON(200, map[string]interface{}{
+			"code": 200,
+			"msg":  "success"})
+	} else {
+		r.JSON(200, map[string]interface{}{
+			"code": 403,
+			"msg":  "Username or Email Address already taken."})
+	}
 }
