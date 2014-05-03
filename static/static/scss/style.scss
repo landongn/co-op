@@ -1,14 +1,15 @@
 @import "red-sass/red-sass",
 	"foundation/scss/foundation.scss",
-	
+	"fonts/gotham",
 	"mixins/mixins",
 
 	"placeholders/placeholders",
-
-	"fonts/icons",
-
+	
+	
 	"base/body",
 	"base/header",
 	"base/footer",
+
+	"components/signupComponent",
 
 	"pages/index";

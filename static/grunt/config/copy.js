@@ -13,7 +13,7 @@ module.exports = function (config) {
 				config.source + '*.{ico,txt}',
 				config.source + '.htaccess',
 				config.source + 'img/{,*/}*.{jpg,jpeg,png,webp,gif}',
-				config.source + 'fonts/*',
+				config.source + 'fonts/**/*',
 				config.source + 'lib/modernizr/modernizr.js'
 			],
 			dest: config.deploy

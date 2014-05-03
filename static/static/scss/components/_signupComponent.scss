@@ -1,0 +1,36 @@
+.signup {
+	position: relative;
+	width: 320px;
+	display: block;
+	margin-top: 300px;
+	margin: 0 auto 5% 10%;
+
+	form {
+		label {
+			span {
+				visibility:hidden;
+				color: #fff;
+				padding: 5px;
+				text-align: left;
+				font-size: 16px;
+				position: absolute;
+				font-family: 'Gotham Thin';
+				left: 100%;
+				display: block;
+				min-width: 300px;
+			}
+
+			input {
+				background: rgba(0, 0, 0, 0.5) !important;
+				border: none !important;
+				border-left: 1px solid #fff !important;
+				margin-bottom: 30px;
+				color: #fff !important;
+			}
+
+			button {
+				background-color:#C7F0B2;
+			}
+		}
+	}
+}

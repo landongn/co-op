@@ -1,0 +1,25 @@
+<form class="signup-form">
+	<p>Recently move? In a new place, or making a fresh start?  Maybe you're just looking for someone to nerd out with Doctor Who or catch a movie.  That can be rough.  People at work might not be your cup of tea, or you could be just looking to have some more people to interact with.
+
+	<p>Coop wants to let our attachment to technology lend a hand in setting you up with people who are like you.
+
+	<p>One last thing.  We just want to be friends. </p>
+
+
+	<label for="username">
+		<span>use a nickname, not your personal information.</span>
+		{{input type="text" name="username" placeholder="username" value=username}}
+	</label>
+
+	<label for="email">
+		<span>We need a way to contact you sometimes.</span>
+		{{input type="text" name="email" placeholder="email" value=email}}
+	</label>
+
+	<label for="password">
+		<span>In the spirit of new adventures, try a password you've never used before.</span>
+		{{input type="password" name="password" placeholder="password" value=password}}
+	</label>
+	
+	<button class="signup-button" {{action 'attemptRegistration'}}>Sign up</button>
+</form>
