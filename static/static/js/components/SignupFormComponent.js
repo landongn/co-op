@@ -2,6 +2,9 @@ App.SignupFormComponent = Ember.Component.extend({
 	password: '',
 	username: '',
 	email: '',
+	passwordConfirm: '',
+
+	signupAttempts: 0,
 
 	focusIn: function (e) {
 		$(e.target).siblings('span.tooltip').addClass('show-tooltip');
@@ -18,12 +21,19 @@ App.SignupFormComponent = Ember.Component.extend({
 		} else {
 			if (this.get('username').length === 0 || this.get('username').length < 3) {
 				this.set('invalidUsername', true);
-				this.set('failureUsername', 'Usernames should be at least 3 letters long. Try another one.');
+				this.set('failureUsername', 'Usernames should be at least 3 characters long. Try another one.');
 			}
 
 			if (this.get('password').length === 0 || this.get('password').length < 3) {
 				this.set('invalidPassword', true);
 				this.set('failurePassword', 'Passwords need to have at least 3 characters. Get creative!');
+			}
+
+			if (this.get('password') !== this.get('passwordConfirm')) {
+				this.setProperties({
+					invalidPassword: true,
+					failurePassword: "Passwords must match"
+				});
 			}
 
 			var em = this.get('email');
@@ -34,18 +44,47 @@ App.SignupFormComponent = Ember.Component.extend({
 
 			return false;
 		}
-	}.property('password', 'email', 'username'),
+	}.property('signupAttempts', 'password', 'email', 'username', 'invalidUsername', 'invalidPassword', 'invalidEmail', 'passwordConfirm'),
 
 	invalidate: function (failure) {
-		switch (failure.code) {
-			case 200:
-				break;
+		if (failure.code === "name") {
+			this.setProperties({
+				invalidUsername: true,
+				failureUsername: failure.msg
+			});
+		}
 
-			case 403:
-				break;
+		if (failure.code === "email") {
+			this.setProperties({
+				invalidEmail: true,
+				failureEmail: failure.msg
+			});
+		}
 
-			default:
-				break;
+		if (failure.code === "error") {
+			this.setProperties({
+				invalidEmail: true,
+				invalidUsername: true,
+				failureUsername: failure.msg.username,
+				failureEmail: failure.msg.email
+			});
+		}
+
+		if (failure.code === "password") {
+			this.setProperties({
+				invalidPassword: true,
+				failurePassword: "Passwords must match"
+			});
+		}
+	},
+
+	click: function (e) {
+		if (e.target.nodeName === 'INPUT' && e.target.className !== "submit-signup-form") {
+			this.setProperties({
+				invalidUsername: false,
+				invalidPassword: false,
+				invalidEmail: false
+			});
 		}
 	},
 
@@ -58,10 +97,12 @@ App.SignupFormComponent = Ember.Component.extend({
 	},
 	actions: {
 		attemptRegistration: function () {
+			this.incrementProperty('signupAttempts');
 			if (this.get('isValid')) {
 				$.post('/account/signup', {
 					username: this.get("username"),
 					password: this.get('password'),
+					passwordConfirm: this.get('passwordConfirm'),
 					email: this.get("email")
 				}, function (resp) {
 					if (resp.code === 200) {

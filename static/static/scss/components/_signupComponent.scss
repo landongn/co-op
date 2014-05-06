@@ -52,13 +52,22 @@
 				background: rgba(0, 0, 0, 0.5) !important;
 				border: none !important;
 				border-left: 1px solid #fff !important;
+				border-right: 1px solid #fff !important;
 				margin-bottom: 30px;
 				color: #fff !important;
 			}
-
-			button {
-				background-color:#C7F0B2;
-			}
 		}
 	}
+}
+
+button.button.submit-signup-button {
+	background-color:$backgroundColor;
+	width: 100%;
+	transition: all 1s ease-in-out;
+	&:hover {
+		transition: all 1s ease-in-out;
+		background-color: saturate($backgroundColor, 20%);
+		box-shadow: inset 2px solid $backgroundColor;
+	}
+	font-family: "Gotham Thin";
 }

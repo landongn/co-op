@@ -1,4 +1,4 @@
-@include reset;
+
 
 @mixin mons() {
 	font-family: 'Montserrat';
@@ -9,6 +9,13 @@ html, body {
 	color: $primaryColor;
 	@include mons;
 	transform: translateZ(0);
+	height: 100%;
+}
+
+@media all and (min-width: 500px) {
+	html, body {
+		height: auto;
+	}
 }
 
 h1, h2, h3, h4, h5 {

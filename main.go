@@ -29,6 +29,7 @@ func main() {
 	m.Use(martini.Static("static/deploy"))
 	fmt.Println("Setting up DB")
 	m.Map(SetupDB())
+	m.Use(martini.Logger())
 
 	m.Use(render.Renderer(render.Options{
 		// Specify what path to load the templates from.
