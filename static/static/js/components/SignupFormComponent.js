@@ -6,6 +6,8 @@ App.SignupFormComponent = Ember.Component.extend({
 
 	signupAttempts: 0,
 
+	signedUp: false,
+
 	focusIn: function (e) {
 		$(e.target).siblings('span.tooltip').addClass('show-tooltip');
 	},
@@ -106,7 +108,7 @@ App.SignupFormComponent = Ember.Component.extend({
 					email: this.get("email")
 				}, function (resp) {
 					if (resp.code === 200) {
-						this.transitionTo('login');
+						this.set('signedUp', true);
 					} else {
 						this.invalidate(resp);
 					}

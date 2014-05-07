@@ -6,6 +6,12 @@
 	<p>One last thing.  We just want to be friends. </p>
 
 
+	{{#if signedUp}}
+		<h4>Got it.  Welcome to co&middot;op.</h4>
+		<p>You're all signed up. We're not ready to show off the app just yet, but as soon as we do, you'll know.</p>
+		<a href="https://twitter.com/share" class="twitter-share-button" data-text="I just signed up for #coop. Get a spot in the beta while they last: http://co-op.io" data-via="landongn" data-size="large">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+	{{else}}
 	<label for="username">
 		<span class="tooltip">use a nickname, not your personal information.</span>
 		{{input type="text" name="username" placeholder="username" value=username}}
@@ -30,5 +36,6 @@
 		<span {{bind-attr class=":validator invalidPassword"}}>{{failurePassword}}</span>
 	</label>
 	
-	<button class="button submit-signup-button" {{action 'attemptRegistration'}}>Get on the waiting list</button>
+	<button class="button submit-signup-button" {{action 'attemptRegistration'}}>Get on the waiting list <i class="fi-right-arrow"></i></button>
 </form>
+{{/if}}

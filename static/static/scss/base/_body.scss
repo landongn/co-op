@@ -46,3 +46,17 @@ section.main-container {
 
 	
 }
+
+footer {
+	text-align: center;
+	padding: 10px;
+	background: $backgroundColor;
+	a {
+		color: #fff;
+		transition: color 350ms ease-in-out;
+		&:hover {
+			color: #eee;
+			transition: color 350ms ease-in-out;
+		}
+	}
+}
