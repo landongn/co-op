@@ -16,7 +16,7 @@ func PanicIf(err error) {
 }
 
 func SetupDB() *gorm.DB {
-	DB, err := gorm.Open("postgres", "host=localhost user=coop_dev dbname=coop_dev password=coop_dev sslmode=disable")
+	DB, err := gorm.Open("postgres", "host=localhost user=coop_production dbname=coop_production password=coop_production sslmode=disable")
 	PanicIf(err)
 	DB.LogMode(true)
 	DB.AutoMigrate(users.Profile{})
